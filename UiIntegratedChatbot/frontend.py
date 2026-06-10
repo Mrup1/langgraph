@@ -26,11 +26,16 @@ if user_input and user_input.strip():
     
     # 3. Extract AI response content from state list
     ai_message = response['messages'][-1].content
-    
+
     # 4. Append AI message to UI state and render it
-    st.session_state['messages'].append({"role": "assistant", "content": ai_message})
     with st.chat_message("assistant"):
-        st.text(ai_message)
-        
+        ai_message = st.write_stream(
+            message_chunk.content for message_chunk,metadata in chatbot.stream(
+                {'messages': [HumanMessage(content=user_input)]},
+                config={'configurable':{'thread_id':'thread-1'}},
+                stream_mode='messages'
+            )
+        )
+    st.session_state['messages'].append({"role": "assistant", "content": ai_message})
     # Force a rerun to show the newly added assistant response cleanly
     st.rerun()
