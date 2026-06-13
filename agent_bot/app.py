@@ -20,7 +20,7 @@ st.title("🏥 Hospital AI Assistant")
 st.markdown("Ask complex multi-intent questions like: *'Who are your cardiologists, what do they charge, and are they available on 2026-06-15?'*")
 st.markdown("---")
 
-# Session State Management for conversational memory
+# Session State Management for conversational 
 if "thread_id" not in st.session_state:
     st.session_state.thread_id = str(uuid.uuid4())
 
